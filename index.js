@@ -1,25 +1,30 @@
-const CaverExtKAS = require('caver-js-ext-kas')
-const env = require('./env.json')
-const chainId = require('./chainId')
+const Caver = require('caver-js')
 
-const caver = new CaverExtKAS(chainId[env.network], env.accessKeyId, env.secretAccessKey)
+// Configuration Part
+const accessKeyId = '{your_accessKeyId}'
+const secretAccessKey = '{your_secretAccessKey}'
+const chainId = '1001' // Baobab '1001', Cypress '8217'
+
+const option = {
+	headers: [
+		{ name: 'Authorization', value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64') },
+		{ name: 'x-chain-id', value: chainId },
+	]
+}
+
+const caver = new Caver(new Caver.providers.HttpProvider('https://node-api.klaytnapi.com/v1/klaytn', option))
 
 test()
 
 async function test() {
 	// You can get test KLAY available on Baobab network through Klaytn Wallet-Faucet.
 	// https://baobab.wallet.klaytn.com/faucet
-	const keyringContainer = new caver.keyringContainer()
-	const keyring = keyringContainer.add(keyringContainer.keyring.createFromPrivateKey('0xa1fbc252cf7acf7fe2380a46e9f3353d765fdfa78483acf06e881cbcf29e3f8c'))
+	const keyring = caver.wallet.add(caver.wallet.keyring.createFromPrivateKey('0x{private key}'))
 
-	// Since this is an example that works using KAS, we use caver-js-ext-kas.
-	// KAS SDK basically operates using an account in the KAS Wallet API.
-	// In the case of direct account management as in this example,
-	// the wallet implementing IWallet is passed as the last parameter of the deploy function.
 	const kip17 = await caver.kct.kip17.deploy({
 		name: 'Jasmine',
 		symbol: 'JAS',
-	}, keyring.address, keyringContainer)
+	}, keyring.address)
 
 	console.log(`KIP-17 contract address: ${kip17.options.address}`)
 
