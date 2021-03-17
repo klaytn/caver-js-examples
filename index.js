@@ -1,9 +1,15 @@
 const Caver = require('caver-js')
 
+const URL_NODE_API = 'https://node-api.klaytnapi.com/v1/klaytn';
+
 // Configuration Part
+// Set your KAS access key and secretAccessKey.
 const accessKeyId = '{your_accessKeyId}'
 const secretAccessKey = '{your_secretAccessKey}'
-const chainId = '1001' // Baobab '1001', Cypress '8217'
+
+// const CHAIN_ID_BAOBOB = '1001'
+// const CHAIN_ID_CYPRESS = '8217'
+const chainId = '1001'
 
 const option = {
     headers: [
@@ -12,65 +18,66 @@ const option = {
     ]
 }
 
-const caver = new Caver(new Caver.providers.HttpProvider('https://node-api.klaytnapi.com/v1/klaytn', option))
+const caver = new Caver(new Caver.providers.HttpProvider(URL_NODE_API, option))
 
 test()
 
 async function test () {
-  console.log(`=====> Update AccountKey to AccountKeyPublic`)
+    console.log(`=====> Update AccountKey to AccountKeyPublic`)
 
-  const testAddress = '0x{address}'
-  const testPrivateKey = '0x{private key}'
+    const testAddress = '0x{address}'
+    const testPrivateKey = '0x{private key}'
 
-  // Add keyring to in-memory wallet
-  const keyring = caver.wallet.keyring.create(testAddress, testPrivateKey)
-  caver.wallet.add(keyring)
+    // Add keyring to in-memory wallet
+    const keyring = caver.wallet.keyring.create(testAddress, testPrivateKey)
+    caver.wallet.add(keyring)
 
-  // Create new private key
-  const newKey = caver.wallet.keyring.generateSingleKey()
-  console.log(`new private key: ${newKey}`)
+    // Create new private key
+    const newKey = caver.wallet.keyring.generateSingleKey()
+    console.log(`new private key: ${newKey}`)
 
-  // Create new Keyring instance with new private key
-  const newKeyring = caver.wallet.keyring.create(testAddress, newKey)
-   // Create an Account instance that includes the address and the public key
-  const account = newKeyring.toAccount()
+    // Create new Keyring instance with new private key
+    const newKeyring = caver.wallet.keyring.create(testAddress, newKey)
+    // Create an Account instance that includes the address and the public key
+    const account = newKeyring.toAccount()
 
-  // Create account update transaction object
-  const accountUpdate = new caver.transaction.accountUpdate({
-      from: testAddress,
-      account,
-      gas: 50000,
-  })
+    // Create account update transaction object
+    const accountUpdate = new caver.transaction.accountUpdate({
+        from: testAddress,
+        account,
+        gas: 50000,
+    })
 
-  // Sign the transaction
-  await caver.wallet.sign(testAddress, accountUpdate)
+    // Sign the transaction
+    await caver.wallet.sign(testAddress, accountUpdate)
 
-  // Send transaction
-  const receipt = await caver.rpc.klay.sendRawTransaction(accountUpdate)
-  console.log(`Account Update Transaction receipt => `)
-  console.log(receipt)
-   // Get accountKey from network
-  const accountKey = await caver.rpc.klay.getAccountKey(testAddress)
-  console.log(`Result of account key update to AccountKeyPublic`)
-  console.log(`Account address: ${testAddress}`)
-  console.log(`accountKey =>`)
-  console.log(accountKey)
+    // Send transaction
+    const receipt = await caver.rpc.klay.sendRawTransaction(accountUpdate)
+    console.log(`Account Update Transaction receipt => `)
+    console.log(receipt)
 
-  // Update keyring with new private key in in-memory wallet
-  caver.wallet.updateKeyring(newKeyring)
+    // Get accountKey from network
+    const accountKey = await caver.rpc.klay.getAccountKey(testAddress)
+    console.log(`Result of account key update to AccountKeyPublic`)
+    console.log(`Account address: ${testAddress}`)
+    console.log(`accountKey =>`)
+    console.log(accountKey)
 
-  const vt = new caver.transaction.valueTransfer({
-      from: testAddress,
-      to: testAddress,
-      value: 1,
-      gas: 25000,
-  })
+    // Update keyring with new private key in in-memory wallet
+    caver.wallet.updateKeyring(newKeyring)
 
-  // Sign the transaction with updated keyring
-  await caver.wallet.sign(testAddress, vt)
+    const vt = new caver.transaction.valueTransfer({
+        from: testAddress,
+        to: testAddress,
+        value: 1,
+        gas: 25000,
+    })
 
-  // Send transaction
-  const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)
-  console.log(`After account update value transfer transaction receipt => `)
-  console.log(vtReceipt)
+    // Sign the transaction with updated keyring
+    await caver.wallet.sign(testAddress, vt)
+
+    // Send transaction
+    const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)
+    console.log(`After account update value transfer transaction receipt => `)
+    console.log(vtReceipt)
 }
