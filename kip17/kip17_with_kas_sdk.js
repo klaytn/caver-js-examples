@@ -20,7 +20,7 @@ async function test () {
 	const keyringContainer = new caver.keyringContainer()
 
 	// Add keyring to in-memory wallet
-    const keyring = keyringContainer.keyring.createFromPrivateKey(privateKey)
+	const keyring = keyringContainer.keyring.createFromPrivateKey(privateKey)
 	keyringContainer.add(keyring)
 	
 	// caver.kct.kip17.deploy returns a KIP17 instance
