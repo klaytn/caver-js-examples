@@ -16,6 +16,7 @@ test()
 async function test () {
     const privateKey = '0x{private key}'
 
+	// Create a KeyringContainer instance
 	const keyringContainer = new caver.keyringContainer()
 
 	// Add keyring to in-memory wallet
@@ -39,11 +40,11 @@ async function test () {
 	console.log(`mint receipt: `)
 	console.log(mintReceipt)
 
-	const transferReceipt = await kip17.transferFrom(keyring.address, keyring.address, tokenId, {from:keyring.address})
+	const transferReceipt = await kip17.transferFrom(keyring.address, keyring.address, tokenId, { from:keyring.address })
 	console.log(`transfer receipt: `)
 	console.log(transferReceipt)
 
-	const burnReceipt = await kip17.burn(tokenId, {from:keyring.address})
+	const burnReceipt = await kip17.burn(tokenId, { from:keyring.address })
 	console.log(`burn receipt: `)
 	console.log(burnReceipt)
 }

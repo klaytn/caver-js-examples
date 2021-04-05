@@ -28,7 +28,7 @@ async function test () {
     // Add keyring to in-memory wallet
     const keyring = caver.wallet.keyring.createFromPrivateKey(privateKey)
 	caver.wallet.add(keyring)
-	
+
 	// caver.kct.kip17.deploy returns a KIP17 instance
 	const kip17 = await caver.kct.kip17.deploy({
 		name: 'Jasmine',
@@ -44,11 +44,11 @@ async function test () {
 	console.log(`mint receipt: `)
 	console.log(mintReceipt)
 
-	const transferReceipt = await kip17.transferFrom(keyring.address, keyring.address, tokenId, {from:keyring.address})
+	const transferReceipt = await kip17.transferFrom(keyring.address, keyring.address, tokenId, { from:keyring.address })
 	console.log(`transfer receipt: `)
 	console.log(transferReceipt)
 
-	const burnReceipt = await kip17.burn(tokenId, {from:keyring.address})
+	const burnReceipt = await kip17.burn(tokenId, { from:keyring.address })
 	console.log(`burn receipt: `)
 	console.log(burnReceipt)
 }
