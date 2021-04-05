@@ -1,6 +1,6 @@
 const Caver = require('caver-js')
 
-const URL_NODE_API = 'https://node-api.klaytnapi.com/v1/klaytn';
+const URL_NODE_API = 'https://node-api.klaytnapi.com/v1/klaytn'
 
 // Configuration Part
 // Set your KAS access key and secretAccessKey.
