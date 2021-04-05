@@ -25,7 +25,6 @@ async function test () {
 	
     // caver.kct.kip17.deploy returns a KIP17 instance
     // If you send IWallet as a last paramter, caver.kct.kip17 will use that to sign.
-    // If you create a KIP17 instance, you can call `kip17.setWallet(keyringContainer)` to use KeyringContainer instead of KAS Wallet API
     const kip17 = await caver.kct.kip17.deploy({
         name: 'Jasmine',
         symbol: 'JAS',
@@ -33,6 +32,9 @@ async function test () {
 
     const kip17Address = kip17.options.address
     console.log(`kip17Address : ${kip17Address}`)
+	
+    // Call `kip17.setWallet(keyringContainer)` to use KeyringContainer instead of KAS Wallet API
+    kip17.setWallet(keyringContainer)
 
     const tokenId = '1'
     const uri = 'http://test.url'
