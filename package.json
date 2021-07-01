@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "caver-js": "^1.6.1-rc.1",
-    "caver-js-ext-kas": "^1.1.2-rc.3"
+    "caver-js-ext-kas": "^1.1.2-rc.3",
+    "dotenv": "^8.2.0"
   }
 }
