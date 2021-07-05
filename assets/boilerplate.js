@@ -8,6 +8,11 @@ let chainId = ""; // e.g. "1001" or "8217";
 let senderAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 let senderPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1"
 
+/**
+ * Boilerplate code about "How to ..."
+ * Related article - Korean:
+ * Related article - English:
+ */
 async function main () {
     try {
         loadEnv()
@@ -24,12 +29,12 @@ function loadEnv() {
         throw result.error
     }
 
-    nodeApiUrl = nodeApiUrl == "" ? result.parsed.NODE_API_URL : nodeApiUrl
-    accessKeyId = accessKeyId == "" ? result.parsed.ACCESS_KEY_ID : accessKeyId
-    secretAccessKey = secretAccessKey == "" ? result.parsed.SECRET_ACCESS_KEY : secretAccessKey
-    chainId = chainId == "" ? result.parsed.CHAIN_ID : chainId
-    senderAddress = senderAddress == "" ? result.parsed.SENDER_ADDRESS : senderAddress
-    senderPrivateKey = senderPrivateKey == "" ? result.parsed.SENDER_PRIVATE_KEY : senderPrivateKey
+    nodeApiUrl = nodeApiUrl === "" ? result.parsed.NODE_API_URL : nodeApiUrl
+    accessKeyId = accessKeyId === "" ? result.parsed.ACCESS_KEY_ID : accessKeyId
+    secretAccessKey = secretAccessKey === "" ? result.parsed.SECRET_ACCESS_KEY : secretAccessKey
+    chainId = chainId === "" ? result.parsed.CHAIN_ID : chainId
+    senderAddress = senderAddress === "" ? result.parsed.SENDER_ADDRESS : senderAddress
+    senderPrivateKey = senderPrivateKey === "" ? result.parsed.SENDER_PRIVATE_KEY : senderPrivateKey
 }
 
 async function run () {

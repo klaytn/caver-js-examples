@@ -12,7 +12,8 @@ ARR_LEN=${#ARR_IN[@]}
 COMMON_ARCHITECTURE_LAYER_NAME=${ARR_IN[0]}
 SCENARIO_NAME=${ARR_IN[$ARR_LEN - 1]}
 
-echo "Create project structure for $NEW_SCENARIO\n"
-
-mkdir -p $NEW_SCENARIO
-cp $BOILER_PLATE_TEMPLATE $NEW_SCENARIO
+if [ ! -d $NEW_SCENARIO ]; then
+  echo "Create project structure for $NEW_SCENARIO\n"
+  mkdir -p $NEW_SCENARIO
+  cp $BOILER_PLATE_TEMPLATE $NEW_SCENARIO
+fi
