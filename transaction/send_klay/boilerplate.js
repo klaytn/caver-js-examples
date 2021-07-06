@@ -10,11 +10,10 @@ let secretAccessKey = ""; // e.g. "aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG";
 let chainId = ""; // e.g. "1001" or "8217";
 let senderAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 let senderPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1"
+let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
- * Boilerplate code about "How to ..."
- * Related article - Korean:
- * Related article - English:
+ * Boilerplate code about "How to send Klay."
  */
 async function main () {
     try {
@@ -38,6 +37,7 @@ function loadEnv() {
     chainId = chainId === "" ? result.parsed.CHAIN_ID : chainId
     senderAddress = senderAddress === "" ? result.parsed.SENDER_ADDRESS : senderAddress
     senderPrivateKey = senderPrivateKey === "" ? result.parsed.SENDER_PRIVATE_KEY : senderPrivateKey
+    recipientAddress = recipientAddress === "" ? result.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
 async function run () {
@@ -49,5 +49,17 @@ async function run () {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    // Write your own boilerplate.js...
+    const keyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
+    caver.wallet.add(keyring)
+
+    // Send 1 KLAY.
+    const vt = caver.transaction.valueTransfer.create({
+        from: keyring.address,
+        to: recipientAddress,
+        value: caver.utils.convertToPeb(1, caver.utils.klayUnit.KLAY.unit),
+        gas: 25000
+    })
+    await caver.wallet.sign(keyring.address, vt);
+    const receipt = await caver.rpc.klay.sendRawTransaction(vt)
+    console.log(receipt)
 }

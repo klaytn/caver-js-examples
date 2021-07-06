@@ -1,6 +1,9 @@
+const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
+const ROOT_DIR = path.join(__dirname, '../..'); // Path can be changed based on its actual location.
 
+// You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
 let nodeApiUrl = ""; // e.g. "https://node-api.klaytnapi.com/v1/klaytn";
 let accessKeyId = ""; // e.g. "KASK1LVNO498YT6KJQFUPY8S";
 let secretAccessKey = ""; // e.g. "aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG";
@@ -22,7 +25,7 @@ async function main () {
 main()
 
 function loadEnv() {
-    result = dotenv.config()
+    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
     if (result.error) {
         throw result.error
     }
