@@ -44,7 +44,6 @@ async function run () {
             { name: 'x-chain-id', value: chainId },
         ]
     }
-    // Add keyring to in-memory wallet
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
     // Write your own boilerplate.js...
