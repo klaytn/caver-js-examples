@@ -16,7 +16,7 @@ let senderPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860
  * Related reference - Korean: https://ko.docs.klaytn.com/bapp/json-rpc/api-references/klay/block#klay_getblockreceipts
  * Related reference - English: https://docs.klaytn.com/bapp/json-rpc/api-references/klay/block#klay_getblockreceipts
  */
-async function main () {
+async function main() {
     try {
         loadEnv()
         run()
@@ -24,10 +24,11 @@ async function main () {
         console.error(err)
     }
 }
+
 main()
 
 function loadEnv() {
-    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
+    result = dotenv.config({path: `${ROOT_DIR}/.env`})
     if (result.error) {
         throw result.error
     }
@@ -40,11 +41,14 @@ function loadEnv() {
     senderPrivateKey = senderPrivateKey === "" ? result.parsed.SENDER_PRIVATE_KEY : senderPrivateKey
 }
 
-async function run () {
+async function run() {
     const option = {
         headers: [
-            { name: 'Authorization', value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64') },
-            { name: 'x-chain-id', value: chainId },
+            {
+                name: 'Authorization',
+                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+            },
+            {name: 'x-chain-id', value: chainId},
         ]
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))

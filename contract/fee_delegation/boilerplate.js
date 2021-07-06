@@ -30,7 +30,7 @@ async function main() {
 main()
 
 function loadEnv() {
-    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
+    result = dotenv.config({path: `${ROOT_DIR}/.env`})
     if (result.error) {
         throw result.error
     }

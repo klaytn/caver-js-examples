@@ -10,14 +10,14 @@ let secretAccessKey = ""; // e.g. "aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG";
 let chainId = ""; // e.g. "1001" or "8217";
 let senderAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 let senderPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1"
-let recipientAddress= ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
+let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
  * BoilerPlate code about "How to Update Klaytn Account Keys with Caver #1 — AccountKeyRoleBased"
  * Related article - Korean: https://medium.com/klaytn/caver-js%EB%A1%9C-%EB%82%B4-%EA%B3%84%EC%A0%95%EC%9D%98-%ED%82%A4%EB%A5%BC-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95-3-accountkeyrolebased-bef4d109b467
  * Related article - English:
  */
-async function main () {
+async function main() {
     try {
         loadEnv()
         run()
@@ -25,10 +25,11 @@ async function main () {
         console.error(err)
     }
 }
+
 main()
 
 function loadEnv() {
-    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
+    result = dotenv.config({path: `${ROOT_DIR}/.env`})
     if (result.error) {
         throw result.error
     }
@@ -42,12 +43,15 @@ function loadEnv() {
     recipientAddress = recipientAddress === "" ? result.parsed.RECIPIENT_ADDRESS : recipientAddress;
 }
 
-async function run () {
+async function run() {
     console.log(`=====> Update AccountKey to AccountKeyRoleBased`)
     const option = {
         headers: [
-            { name: 'Authorization', value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64') },
-            { name: 'x-chain-id', value: chainId },
+            {
+                name: 'Authorization',
+                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+            },
+            {name: 'x-chain-id', value: chainId},
         ]
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
@@ -63,7 +67,7 @@ async function run () {
     // Create new Keyring instance with new private keys by role
     const newKeyring = caver.wallet.keyring.create(keyring.address, newRoleBasedKeys)
     // Create an Account instance that includes the address and the role based key
-    const account = newKeyring.toAccount([{ threshold: 2, weights: [1, 1] }, {}, { threshold: 3, weights: [2, 1, 1] }])
+    const account = newKeyring.toAccount([{threshold: 2, weights: [1, 1]}, {}, {threshold: 3, weights: [2, 1, 1]}])
     console.log(account)
 
     // Create account update transaction object

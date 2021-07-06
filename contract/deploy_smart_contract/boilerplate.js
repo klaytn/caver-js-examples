@@ -14,7 +14,7 @@ let deployerPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa8
 /**
  * BoilerPlate code about "How to deploy Smart Contract."
  */
-async function main () {
+async function main() {
     try {
         loadEnv()
         run()
@@ -22,10 +22,11 @@ async function main () {
         console.error(err)
     }
 }
+
 main()
 
 function loadEnv() {
-    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
+    result = dotenv.config({path: `${ROOT_DIR}/.env`})
     if (result.error) {
         throw result.error
     }
@@ -38,11 +39,14 @@ function loadEnv() {
     deployerPrivateKey = deployerPrivateKey === "" ? result.parsed.DEPLOYER_PRIVATE_KEY : deployerPrivateKey
 }
 
-async function run () {
+async function run() {
     const option = {
         headers: [
-            { name: 'Authorization', value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64') },
-            { name: 'x-chain-id', value: chainId },
+            {
+                name: 'Authorization',
+                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+            },
+            {name: 'x-chain-id', value: chainId},
         ]
     }
     // Add keyring to in-memory wallet

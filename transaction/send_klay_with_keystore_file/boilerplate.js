@@ -16,7 +16,7 @@ let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
  * Related article - Korean: https://medium.com/klaytn/common-architecture-of-caver-f7a7a1c554de
  * Related article - English: https://medium.com/klaytn/common-architecture-of-caver-a714224a0047
  */
-async function main () {
+async function main() {
     try {
         loadEnv()
         run()
@@ -24,10 +24,11 @@ async function main () {
         console.error(err)
     }
 }
+
 main()
 
 function loadEnv() {
-    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
+    result = dotenv.config({path: `${ROOT_DIR}/.env`})
     if (result.error) {
         throw result.error
     }
@@ -39,11 +40,14 @@ function loadEnv() {
     recipientAddress = recipientAddress === "" ? result.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
-async function run () {
+async function run() {
     const option = {
         headers: [
-            { name: 'Authorization', value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64') },
-            { name: 'x-chain-id', value: chainId },
+            {
+                name: 'Authorization',
+                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+            },
+            {name: 'x-chain-id', value: chainId},
         ]
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))

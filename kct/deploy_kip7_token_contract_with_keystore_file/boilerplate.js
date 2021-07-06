@@ -17,7 +17,7 @@ let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
  * Related article - Korean: https://medium.com/klaytn/common-architecture-of-caver-f7a7a1c554de
  * Related article - English: https://medium.com/klaytn/common-architecture-of-caver-a714224a0047
  */
-async function main () {
+async function main() {
     try {
         loadEnv()
         run()
@@ -25,10 +25,11 @@ async function main () {
         console.error(err)
     }
 }
+
 main()
 
 function loadEnv() {
-    result = dotenv.config({ path: `${ROOT_DIR}/.env` })
+    result = dotenv.config({path: `${ROOT_DIR}/.env`})
     if (result.error) {
         throw result.error
     }
@@ -40,11 +41,14 @@ function loadEnv() {
     recipientAddress = recipientAddress === "" ? result.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
-async function run () {
+async function run() {
     const option = {
         headers: [
-            { name: 'Authorization', value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64') },
-            { name: 'x-chain-id', value: chainId },
+            {
+                name: 'Authorization',
+                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+            },
+            {name: 'x-chain-id', value: chainId},
         ]
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
@@ -58,14 +62,14 @@ async function run () {
     caver.wallet.add(keyring)
 
     const initialSupply = new BigNumber('1000000000000000000')
-    const params = { name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply }
+    const params = {name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply}
     const kip7 = await caver.kct.kip7.deploy(params, keyring.address)
     console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`);
 
     const name = await kip7.name()
     console.log(`The name of the KIP-7 token contract: ${name}`)
 
-    const opts = { from: keyring.address }
+    const opts = {from: keyring.address}
     const value = 1
     const receipt = await kip7.transfer(recipientAddress, value, opts)
     console.log(receipt)
