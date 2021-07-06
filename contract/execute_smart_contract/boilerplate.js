@@ -34,8 +34,8 @@ function loadEnv() {
     accessKeyId = accessKeyId === "" ? result.parsed.ACCESS_KEY_ID : accessKeyId
     secretAccessKey = secretAccessKey === "" ? result.parsed.SECRET_ACCESS_KEY : secretAccessKey
     chainId = chainId === "" ? result.parsed.CHAIN_ID : chainId
-    deployerAddress = deployerAddress === "" ? result.parsed.SENDER_ADDRESS : deployerAddress
-    deployerPrivateKey = deployerPrivateKey === "" ? result.parsed.SENDER_PRIVATE_KEY : deployerPrivateKey
+    deployerAddress = deployerAddress === "" ? result.parsed.DEPLOYER_ADDRESS : deployerAddress
+    deployerPrivateKey = deployerPrivateKey === "" ? result.parsed.DEPLOYER_PRIVATE_KEY : deployerPrivateKey
 }
 
 async function run () {

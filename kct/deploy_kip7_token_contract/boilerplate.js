@@ -1,20 +1,20 @@
-const fs = require('fs')
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
 const ROOT_DIR = path.join(__dirname, '../..'); // Path can be changed based on its actual location.
+const BigNumber = require('bignumber.js')
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
 let nodeApiUrl = ""; // e.g. "https://node-api.klaytnapi.com/v1/klaytn";
 let accessKeyId = ""; // e.g. "KASK1LVNO498YT6KJQFUPY8S";
 let secretAccessKey = ""; // e.g. "aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG";
 let chainId = ""; // e.g. "1001" or "8217";
+let deployerAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
+let deployerPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1"
 let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
- * BoilerPlate code about "How to send KLAY with keystore file."
- * Related article - Korean: https://medium.com/klaytn/common-architecture-of-caver-f7a7a1c554de
- * Related article - English: https://medium.com/klaytn/common-architecture-of-caver-a714224a0047
+ * Boilerplate code about "How to deploy my own KIP7 token."
  */
 async function main () {
     try {
@@ -36,6 +36,8 @@ function loadEnv() {
     accessKeyId = accessKeyId === "" ? result.parsed.ACCESS_KEY_ID : accessKeyId
     secretAccessKey = secretAccessKey === "" ? result.parsed.SECRET_ACCESS_KEY : secretAccessKey
     chainId = chainId === "" ? result.parsed.CHAIN_ID : chainId
+    deployerAddress = deployerAddress === "" ? result.parsed.DEPLOYER_ADDRESS : deployerAddress
+    deployerPrivateKey = deployerPrivateKey === "" ? result.parsed.DEPLOYER_PRIVATE_KEY : deployerPrivateKey
     recipientAddress = recipientAddress === "" ? result.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
@@ -48,22 +50,19 @@ async function run () {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    // 1. Create your own keystore file at "https://baobab.wallet.klaytn.com/create"
-    //    and place the file at `caver-js-examples/transaction/send_klay_with_keystore_file/resources`.
-    // 2. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
-    const keystore = fs.readFileSync(`${__dirname}/resources/keystore.json`, 'utf8')
-    const password = "Password!@#4"; // Put your password here.
-    const keyring = caver.wallet.keyring.decrypt(keystore, password)
+    const keyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
     caver.wallet.add(keyring)
 
-    // Send 1 KLAY.
-    const vt = caver.transaction.valueTransfer.create({
-        from: keyring.address,
-        to: recipientAddress,
-        value: caver.utils.convertToPeb(1, caver.utils.klayUnit.KLAY.unit),
-        gas: 25000
-    })
-    await caver.wallet.sign(keyring.address, vt)
-    const receipt = await caver.rpc.klay.sendRawTransaction(vt)
+    const initialSupply = new BigNumber('1000000000000000000')
+    const params = { name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply }
+    const kip7 = await caver.kct.kip7.deploy(params, keyring.address)
+    console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`);
+
+    const name = await kip7.name()
+    console.log(`The name of the KIP-7 token contract: ${name}`)
+
+    const opts = { from: keyring.address }
+    const value = 1
+    const receipt = await kip7.transfer(recipientAddress, value, opts)
     console.log(receipt)
 }
