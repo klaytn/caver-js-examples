@@ -53,6 +53,7 @@ async function run () {
     const keyring = caver.wallet.keyring.decrypt(keystore, password)
     caver.wallet.add(keyring)
 
+    // Send 1 KLAY.
     const vt = caver.transaction.valueTransfer.create({
         from: keyring.address,
         to: recipientAddress,
