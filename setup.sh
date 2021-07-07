@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## How to use this shell script
-# caver-java-examples$ ./setup.sh <common-architecture-layer>/<scenario>
+# caver-js-examples$ ./setup.sh <common-architecture-layer>/<scenario>
 # e.g. $ ./setup.sh account/update_account_with_account_key_weighted_multisig
 ##
 
