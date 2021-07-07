@@ -28,9 +28,9 @@ async function main() {
 main()
 
 function loadEnv() {
-    envs = dotenv.config({ path: `${ROOT_DIR}/.env` })
-    if (result.error) {
-        throw result.error
+    envs = dotenv.config({path: `${ROOT_DIR}/.env`})
+    if (envs.error) {
+        throw envs.error
     }
 
     nodeApiUrl = nodeApiUrl === '' ? envs.parsed.NODE_API_URL : nodeApiUrl
@@ -53,12 +53,23 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
+    // This is for testing Baobab Network (Test-net)
     // If there are no transactions in the block being looked up, the returned data will be empty.
-    const blockHashEmpty = '0x0f7f242e97dd0334c1c3d76b2f39846064b3766072fd4f2350c62d288477de21'
-    let blockTransactionReceipts = await caver.rpc.klay.getBlockReceipts(blockHashEmpty)
+    const baobabBlockHashEmpty = '0x0f7f242e97dd0334c1c3d76b2f39846064b3766072fd4f2350c62d288477de21'
+    let blockTransactionReceipts = await caver.rpc.klay.getBlockReceipts(baobabBlockHashEmpty)
     console.log(blockTransactionReceipts)
 
-    const blockHash = '0x28fdc2fdce29513105fdaa605384a75ee15623ccb2271febc5b73554f17ab09d'
-    blockTransactionReceipts = await caver.rpc.klay.getBlockReceipts(blockHash)
+    const baobabBlockHash = '0x28fdc2fdce29513105fdaa605384a75ee15623ccb2271febc5b73554f17ab09d'
+    blockTransactionReceipts = await caver.rpc.klay.getBlockReceipts(baobabBlockHash)
     console.log(blockTransactionReceipts)
+
+    // // This is for testing Cypress Network (Main-net)
+    // // If there are no transactions in the block being looked up, the returned data will be empty.
+    // const cypressBlockHashEmpty = '0xacb410b0c43e5dcddaa27c55533699a6cbe95b150e38e67c04ba2b9e9d7a47dd'
+    // let blockTransactionReceipts = await caver.rpc.klay.getBlockReceipts(cypressBlockHashEmpty)
+    // console.log(blockTransactionReceipts)
+
+    // const cypressBlockHash = '0xaaec69d70a85504db43a01599d92c22b74c8e03776b499258f4dd7b2fc2957d1'
+    // blockTransactionReceipts = await caver.rpc.klay.getBlockReceipts(cypressBlockHash)
+    // console.log(blockTransactionReceipts)
 }

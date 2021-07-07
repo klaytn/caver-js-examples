@@ -29,8 +29,8 @@ main()
 
 function loadEnv() {
     envs = dotenv.config({ path: `${ROOT_DIR}/.env` })
-    if (result.error) {
-        throw result.error
+    if (envs.error) {
+        throw envs.error
     }
 
     nodeApiUrl = nodeApiUrl === '' ? envs.parsed.NODE_API_URL : nodeApiUrl
