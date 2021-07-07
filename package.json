@@ -1,15 +1,16 @@
 {
-  "name": "caver-js-boilerplate",
+  "name": "caver-js-examples",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "caver-js": "^1.6.1-rc.1",
-    "caver-js-ext-kas": "^1.1.2-rc.3"
+    "bignumber.js": "^8.0.2",
+    "caver-js": "^1.6.3",
+    "dotenv": "^8.2.0"
   }
 }
