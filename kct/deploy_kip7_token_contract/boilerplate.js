@@ -15,6 +15,8 @@ let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
  * Boilerplate code about "How to deploy my own KIP7 token."
+ * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/api-references/caver.kct/kip7
+ * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/api-references/caver.kct/kip7
  */
 async function main() {
     try {
@@ -54,18 +56,18 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    const keyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
-    caver.wallet.add(keyring)
+    const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
+    caver.wallet.add(deployerKeyring)
 
     const initialSupply = new BigNumber('1000000000000000000')
     const params = {name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply}
-    const kip7 = await caver.kct.kip7.deploy(params, keyring.address)
+    const kip7 = await caver.kct.kip7.deploy(params, deployerKeyring.address)
     console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`);
 
     const name = await kip7.name()
     console.log(`The name of the KIP-7 token contract: ${name}`)
 
-    const opts = {from: keyring.address}
+    const opts = {from: deployerKeyring.address}
     const value = 1
     const receipt = await kip7.transfer(recipientAddress, value, opts)
     console.log(receipt)

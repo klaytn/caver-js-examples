@@ -14,6 +14,8 @@ let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
  * Boilerplate code about "How to send Klay."
+ * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/getting-started#sending-klay-at-a-glance
+ * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/getting-started#sending-klay-at-a-glance
  */
 async function main() {
     try {
@@ -53,17 +55,17 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    const keyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
-    caver.wallet.add(keyring)
+    const senderKeyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
+    caver.wallet.add(senderKeyring)
 
     // Send 1 KLAY.
     const vt = caver.transaction.valueTransfer.create({
-        from: keyring.address,
+        from: senderKeyring.address,
         to: recipientAddress,
         value: caver.utils.convertToPeb(1, caver.utils.klayUnit.KLAY.unit),
         gas: 25000
     })
-    await caver.wallet.sign(keyring.address, vt);
+    await caver.wallet.sign(senderKeyring.address, vt);
     const receipt = await caver.rpc.klay.sendRawTransaction(vt)
     console.log(receipt)
 }

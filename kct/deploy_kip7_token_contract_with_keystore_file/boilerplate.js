@@ -13,7 +13,7 @@ let chainId = ""; // e.g. "1001" or "8217";
 let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
- * BoilerPlate code about "How to deploy my own KIP7 token with keystore file."
+ * Boilerplate code about "How to deploy my own KIP7 token with keystore file."
  * Related article - Korean: https://medium.com/klaytn/common-architecture-of-caver-f7a7a1c554de
  * Related article - English: https://medium.com/klaytn/common-architecture-of-caver-a714224a0047
  */
@@ -58,18 +58,18 @@ async function run() {
     // 2. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
     const keystore = fs.readFileSync(`${__dirname}/resources/keystore.json`, 'utf8')
     const password = "Password!@#4"; // Put your password here.
-    const keyring = caver.wallet.keyring.decrypt(keystore, password)
-    caver.wallet.add(keyring)
+    const deployerKeyring = caver.wallet.keyring.decrypt(keystore, password)
+    caver.wallet.add(deployerKeyring)
 
     const initialSupply = new BigNumber('1000000000000000000')
     const params = {name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply}
-    const kip7 = await caver.kct.kip7.deploy(params, keyring.address)
+    const kip7 = await caver.kct.kip7.deploy(params, deployerKeyring.address)
     console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`);
 
     const name = await kip7.name()
     console.log(`The name of the KIP-7 token contract: ${name}`)
 
-    const opts = {from: keyring.address}
+    const opts = {from: deployerKeyring.address}
     const value = 1
     const receipt = await kip7.transfer(recipientAddress, value, opts)
     console.log(receipt)

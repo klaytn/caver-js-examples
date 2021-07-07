@@ -12,7 +12,9 @@ let deployerAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 let deployerPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1"
 
 /**
- * BoilerPlate code about "How to deploy Smart Contract."
+ * Boilerplate code about "How to deploy Smart Contract."
+ * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
+ * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
  */
 async function main() {
     try {
@@ -81,12 +83,12 @@ async function run() {
             type: 'constructor',
         },
     ]
-    const deployer = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
-    caver.wallet.add(deployer)
+    const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
+    caver.wallet.add(deployerKeyring)
 
     let contract = caver.contract.create(abi)
     contract = await contract.deploy({
-        from: deployer.address,
+        from: deployerKeyring.address,
         gas: 4000000
     }, byteCode, 'magicKey', 'magicValue')
     console.log(`The address of deployed smart contract: ${contract.options.address}`)

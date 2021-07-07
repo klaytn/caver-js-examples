@@ -12,8 +12,11 @@ let deployerAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 let deployerPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1"
 
 /**
- * BoilerPlate code about "How to execute Smart Contract."
+ * Boilerplate code about "How to execute Smart Contract."
+ * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
+ * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
  */
+
 async function main() {
     try {
         loadEnv()
@@ -79,12 +82,12 @@ async function run() {
         },
     ]
     const contractAddress = '0x44464bb3d41fb35fff4b99819b4d8601a93f5a59'
-    const deployer = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
-    caver.wallet.add(deployer)
+    const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
+    caver.wallet.add(deployerKeyring)
 
     contract = caver.contract.create(abi, contractAddress)
     const receipt = await contract.send({
-        from: deployer.address,
+        from: deployerKeyring.address,
         gas: 1000000,
     }, 'set', 'k1', 'v1')
     console.log(receipt)

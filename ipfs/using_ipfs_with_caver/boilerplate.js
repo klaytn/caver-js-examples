@@ -13,7 +13,7 @@ let senderPrivateKey = ""; // e.g. "0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860
 let recipientAddress = ""; // e.g. "0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199"
 
 /**
- * Boilerplate code about "Using IPFS with Caver"
+ * Boilerplate code about "Using IPFS with Caver."
  * Related article - Korean: https://medium.com/klaytn/caver%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-ipfs-%EC%82%AC%EC%9A%A9%EB%B2%95-4889a3b29c0b
  * Related article - English: https://medium.com/klaytn/using-ipfs-with-caver-964e1f721bfe
  */
@@ -76,12 +76,12 @@ async function run() {
     console.log(`multihash: ${multihash}`)
 
     // Add keyring to in-memory wallet
-    const keyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
-    caver.wallet.add(keyring)
+    const senderKeyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
+    caver.wallet.add(senderKeyring)
 
     // Create ValueTransferMemo transaction
     const tx = caver.transaction.valueTransferMemo.create({
-        from: keyring.address,
+        from: senderKeyring.address,
         to: recipientAddress,
         value: 1,
         input: multihash,
@@ -89,7 +89,7 @@ async function run() {
     })
 
     // Sign to the transaction
-    await caver.wallet.sign(keyring.address, tx)
+    await caver.wallet.sign(senderKeyring.address, tx)
 
     // Send a signed transaction to Klaytn
     const receipt = await caver.rpc.klay.sendRawTransaction(tx)

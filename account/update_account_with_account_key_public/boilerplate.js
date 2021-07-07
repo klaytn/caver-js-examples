@@ -57,37 +57,37 @@ async function run() {
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
     // Add keyring to in-memory wallet
-    const keyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
-    caver.wallet.add(keyring)
+    const senderKeyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
+    caver.wallet.add(senderKeyring)
 
     // Create new private key
     const newKey = caver.wallet.keyring.generateSingleKey()
     console.log(`new private key: ${newKey}`)
 
     // Create new Keyring instance with new private key
-    const newKeyring = caver.wallet.keyring.create(keyring.address, newKey)
+    const newKeyring = caver.wallet.keyring.create(senderKeyring.address, newKey)
     // Create an Account instance that includes the address and the public key
     const account = newKeyring.toAccount()
     console.log(account)
 
     // Create account update transaction object
     const accountUpdate = caver.transaction.accountUpdate.create({
-        from: keyring.address,
+        from: senderKeyring.address,
         account: account,
         gas: 50000,
     })
 
     // Sign the transaction
-    await caver.wallet.sign(keyring.address, accountUpdate)
+    await caver.wallet.sign(senderKeyring.address, accountUpdate)
     // Send transaction
     const receipt = await caver.rpc.klay.sendRawTransaction(accountUpdate)
     console.log(`Account Update Transaction receipt => `)
     console.log(receipt)
 
     // Get accountKey from network
-    const accountKey = await caver.rpc.klay.getAccountKey(keyring.address)
+    const accountKey = await caver.rpc.klay.getAccountKey(senderKeyring.address)
     console.log(`Result of account key update to AccountKeyPublic`)
-    console.log(`Account address: ${keyring.address}`)
+    console.log(`Account address: ${senderKeyring.address}`)
     console.log(`accountKey =>`)
     console.log(accountKey)
 
@@ -95,14 +95,14 @@ async function run() {
     caver.wallet.updateKeyring(newKeyring)
     // Send 1 Peb to recipient to test whether updated accountKey is well-working or not.
     const vt = caver.transaction.valueTransfer.create({
-        from: keyring.address,
+        from: senderKeyring.address,
         to: recipientAddress,
         value: 1,
         gas: 25000,
     })
 
     // Sign the transaction with updated keyring
-    await caver.wallet.sign(keyring.address, vt)
+    await caver.wallet.sign(senderKeyring.address, vt)
     // Send transaction
     const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)
     console.log(`Receipt of value transfer transaction after account update => `)

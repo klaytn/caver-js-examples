@@ -57,17 +57,17 @@ async function run() {
     // 2. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
     const keystore = fs.readFileSync(`${__dirname}/resources/keystore.json`, 'utf8')
     const password = "Password!@#4"; // Put your password here.
-    const keyring = caver.wallet.keyring.decrypt(keystore, password)
-    caver.wallet.add(keyring)
+    const senderKeyring = caver.wallet.keyring.decrypt(keystore, password)
+    caver.wallet.add(senderKeyring)
 
     // Send 1 KLAY.
     const vt = caver.transaction.valueTransfer.create({
-        from: keyring.address,
+        from: senderKeyring.address,
         to: recipientAddress,
         value: caver.utils.convertToPeb(1, caver.utils.klayUnit.KLAY.unit),
         gas: 25000
     })
-    await caver.wallet.sign(keyring.address, vt)
+    await caver.wallet.sign(senderKeyring.address, vt)
     const receipt = await caver.rpc.klay.sendRawTransaction(vt)
     console.log(receipt)
 }

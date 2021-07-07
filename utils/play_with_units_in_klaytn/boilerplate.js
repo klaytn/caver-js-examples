@@ -56,13 +56,13 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    const keyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
-    caver.wallet.add(keyring)
+    const senderKeyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
+    caver.wallet.add(senderKeyring)
 
     // Because a field "value" always interprets its value as a unit "peb",
     // you must take care what is the actual value when you sending some KLAY.
     const vt = caver.transaction.valueTransfer.create({
-        from: keyring.address,
+        from: senderKeyring.address,
         to: recipientAddress,
         gas: 25000,
         value: 1,
