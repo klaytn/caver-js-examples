@@ -80,7 +80,9 @@ async function run() {
             type: 'constructor',
         },
     ]
-    const contractAddress = '0xde81b1a37d52be59003b490c670a574ccf06a061'
+    // You can get contract address
+    // by running caver-js-examples/contract/deploy/boilerplate.js :)
+    const contractAddress = '0x{contractAddress}'
     const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
     caver.wallet.add(deployerKeyring)
 
