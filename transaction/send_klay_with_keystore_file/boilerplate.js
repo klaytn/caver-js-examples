@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
+
 const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
@@ -49,10 +50,10 @@ async function run() {
         headers: [
             {
                 name: 'Authorization',
-                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+                value: `Basic ${Buffer.from(`${accessKeyId}:${secretAccessKey}`).toString('base64')}`,
             },
             { name: 'x-chain-id', value: chainId },
-        ]
+        ],
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
@@ -61,7 +62,7 @@ async function run() {
     // 3. Place that keystore file at `caver-js-examples/kct/deploy_kip7_token_contract_with_keystore_file/resources`.
     // 4. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
     const keystore = fs.readFileSync(`${__dirname}/resources/keystore.json`, 'utf8')
-    const password = ''; // Put your password here.
+    const password = '' // Put your password here.
     const senderKeyring = caver.wallet.keyring.decrypt(keystore, password)
     caver.wallet.add(senderKeyring)
 
@@ -70,7 +71,7 @@ async function run() {
         from: senderKeyring.address,
         to: recipientAddress,
         value: caver.utils.convertToPeb(1, caver.utils.klayUnit.KLAY.unit),
-        gas: 25000
+        gas: 25000,
     })
     await caver.wallet.sign(senderKeyring.address, vt)
     const receipt = await caver.rpc.klay.sendRawTransaction(vt)

@@ -1,6 +1,7 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
+
 const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
@@ -46,10 +47,10 @@ async function run() {
         headers: [
             {
                 name: 'Authorization',
-                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+                value: `Basic ${Buffer.from(`${accessKeyId}:${secretAccessKey}`).toString('base64')}`,
             },
             { name: 'x-chain-id', value: chainId },
-        ]
+        ],
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
@@ -66,7 +67,10 @@ async function run() {
         },
         {
             constant: false,
-            inputs: [{ name: 'key', type: 'string' }, { name: 'value', type: 'string' }],
+            inputs: [
+                { name: 'key', type: 'string' },
+                { name: 'value', type: 'string' },
+            ],
             name: 'set',
             outputs: [],
             payable: false,
@@ -74,7 +78,10 @@ async function run() {
             type: 'function',
         },
         {
-            inputs: [{ name: 'key', type: 'string' }, { name: 'value', type: 'string' }],
+            inputs: [
+                { name: 'key', type: 'string' },
+                { name: 'value', type: 'string' },
+            ],
             payable: false,
             stateMutability: 'nonpayable',
             type: 'constructor',
@@ -87,10 +94,15 @@ async function run() {
     caver.wallet.add(deployerKeyring)
 
     contract = caver.contract.create(abi, contractAddress)
-    const receipt = await contract.send({
-        from: deployerKeyring.address,
-        gas: 1000000,
-    }, 'set', 'k1', 'v1')
+    const receipt = await contract.send(
+        {
+            from: deployerKeyring.address,
+            gas: 1000000,
+        },
+        'set',
+        'k1',
+        'v1'
+    )
     console.log(receipt)
 
     const callResult = await contract.call('get', 'k1')

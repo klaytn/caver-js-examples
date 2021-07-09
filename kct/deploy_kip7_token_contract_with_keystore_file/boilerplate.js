@@ -3,6 +3,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
 const BigNumber = require('bignumber.js')
+
 const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
@@ -46,10 +47,10 @@ async function run() {
         headers: [
             {
                 name: 'Authorization',
-                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+                value: `Basic ${Buffer.from(`${accessKeyId}:${secretAccessKey}`).toString('base64')}`,
             },
             { name: 'x-chain-id', value: chainId },
-        ]
+        ],
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 

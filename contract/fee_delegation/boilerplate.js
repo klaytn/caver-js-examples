@@ -1,6 +1,7 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
+
 const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
@@ -50,10 +51,10 @@ async function run() {
         headers: [
             {
                 name: 'Authorization',
-                value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
+                value: `Basic ${Buffer.from(`${accessKeyId}:${secretAccessKey}`).toString('base64')}`,
             },
             { name: 'x-chain-id', value: chainId },
-        ]
+        ],
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
@@ -78,7 +79,10 @@ async function run() {
         },
         {
             constant: false,
-            inputs: [{ name: 'key', type: 'string' }, { name: 'value', type: 'string' }],
+            inputs: [
+                { name: 'key', type: 'string' },
+                { name: 'value', type: 'string' },
+            ],
             name: 'set',
             outputs: [],
             payable: false,
@@ -86,7 +90,10 @@ async function run() {
             type: 'function',
         },
         {
-            inputs: [{ name: 'key', type: 'string' }, { name: 'value', type: 'string' }],
+            inputs: [
+                { name: 'key', type: 'string' },
+                { name: 'value', type: 'string' },
+            ],
             payable: false,
             stateMutability: 'nonpayable',
             type: 'constructor',
@@ -98,12 +105,17 @@ async function run() {
     const keyString = 'keyString'
 
     // Send a FeeDelegatedSmartContractDeploy transaction to Klaytn directly.
-    contract = await contract.deploy({
-        from: deployerKeyring.address,
-        feeDelegation: true,
-        feePayer: feePayerKeyring.address,
-        gas: 1000000,
-    }, byteCode, keyString, 'valueString')
+    contract = await contract.deploy(
+        {
+            from: deployerKeyring.address,
+            feeDelegation: true,
+            feePayer: feePayerKeyring.address,
+            gas: 1000000,
+        },
+        byteCode,
+        keyString,
+        'valueString'
+    )
     console.log(`The address of deployed smart contract: ${contract.options.address}`)
 
     // // The sender and fee payer each sign the transaction to deploy a smart contract.
@@ -125,13 +137,18 @@ async function run() {
     console.log(`key: ${keyString} / value: ${valueString}`)
 
     // Send a FeeDelegatedSmartContractExecutionWithRatio transaction to Klaytn directly.
-    const setResult = await contract.send({
-        from: deployerKeyring.address,
-        feeDelegation: true,
-        feePayer: feePayerKeyring.address,
-        feeRatio: 50, // Without feeRatio, `send` will use FeeDelegatedSmartContractExecution
-        gas: 1000000,
-    }, 'set', keyString, 'anotherValue')
+    const setResult = await contract.send(
+        {
+            from: deployerKeyring.address,
+            feeDelegation: true,
+            feePayer: feePayerKeyring.address,
+            feeRatio: 50, // Without feeRatio, `send` will use FeeDelegatedSmartContractExecution
+            gas: 1000000,
+        },
+        'set',
+        keyString,
+        'anotherValue'
+    )
 
     // // The sender and fee payer each sign the transaction to execute a smart contract.
     // const executionTx = await contract.sign({
