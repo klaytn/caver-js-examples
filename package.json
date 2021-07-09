@@ -4,7 +4,9 @@
   "description": "",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint './**/*.js'",
+    "lintFix": "eslint './**/*.js' --fix"
   },
   "author": "",
   "license": "ISC",
@@ -12,5 +14,9 @@
     "bignumber.js": "^8.0.2",
     "caver-js": "^1.6.3",
     "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "prettier": "^2.3.2"
   }
 }
