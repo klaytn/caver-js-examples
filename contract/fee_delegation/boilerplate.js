@@ -52,7 +52,7 @@ async function run() {
                 name: 'Authorization',
                 value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
             },
-            {name: 'x-chain-id', value: chainId},
+            { name: 'x-chain-id', value: chainId },
         ]
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
@@ -69,16 +69,16 @@ async function run() {
     const abi = [
         {
             constant: true,
-            inputs: [{name: 'key', type: 'string'}],
+            inputs: [{ name: 'key', type: 'string' }],
             name: 'get',
-            outputs: [{name: '', type: 'string'}],
+            outputs: [{ name: '', type: 'string' }],
             payable: false,
             stateMutability: 'view',
             type: 'function',
         },
         {
             constant: false,
-            inputs: [{name: 'key', type: 'string'}, {name: 'value', type: 'string'}],
+            inputs: [{ name: 'key', type: 'string' }, { name: 'value', type: 'string' }],
             name: 'set',
             outputs: [],
             payable: false,
@@ -86,7 +86,7 @@ async function run() {
             type: 'function',
         },
         {
-            inputs: [{name: 'key', type: 'string'}, {name: 'value', type: 'string'}],
+            inputs: [{ name: 'key', type: 'string' }, { name: 'value', type: 'string' }],
             payable: false,
             stateMutability: 'nonpayable',
             type: 'constructor',
