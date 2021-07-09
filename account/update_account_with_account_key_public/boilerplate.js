@@ -1,7 +1,7 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
-const ROOT_DIR = path.join(__dirname, '../..'); // Path can be changed based on its actual location.
+const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
 let nodeApiUrl = '' // e.g. 'https://node-api.klaytnapi.com/v1/klaytn'
@@ -40,7 +40,7 @@ function loadEnv() {
     chainId = chainId === '' ? envs.parsed.CHAIN_ID : chainId
     senderAddress = senderAddress === '' ? envs.parsed.SENDER_ADDRESS : senderAddress
     senderPrivateKey = senderPrivateKey === '' ? envs.parsed.SENDER_PRIVATE_KEY : senderPrivateKey
-    recipientAddress = recipientAddress === "" ? envs.parsed.RECIPIENT_ADDRESS : recipientAddress;
+    recipientAddress = recipientAddress === '' ? envs.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
 async function run() {
@@ -51,7 +51,7 @@ async function run() {
                 name: 'Authorization',
                 value: 'Basic ' + Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64')
             },
-            {name: 'x-chain-id', value: chainId},
+            { name: 'x-chain-id', value: chainId },
         ]
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
@@ -107,5 +107,4 @@ async function run() {
     const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)
     console.log(`Receipt of value transfer transaction after account update => `)
     console.log(vtReceipt)
-    console.log('You must replace SENDER_PRIVATE_KEY in `caver-js-exapmles/.env` with newly-updated private key to use the updated account continuously.')
 }
