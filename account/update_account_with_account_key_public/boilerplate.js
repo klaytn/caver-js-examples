@@ -107,4 +107,5 @@ async function run() {
     const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)
     console.log(`Receipt of value transfer transaction after account update => `)
     console.log(vtReceipt)
+    console.log('You must replace SENDER_PRIVATE_KEY in `caver-js-exapmles/.env` with newly-updated private key to use the updated account continuously.')
 }
