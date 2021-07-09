@@ -63,7 +63,7 @@ async function run() {
     const initialSupply = new BigNumber('1000000000000000000')
     const params = { name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply }
     const kip7 = await caver.kct.kip7.deploy(params, deployerKeyring.address)
-    console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`);
+    console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`)
 
     const name = await kip7.name()
     console.log(`The name of the KIP-7 token contract: ${name}`)
