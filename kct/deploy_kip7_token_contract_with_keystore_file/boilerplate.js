@@ -57,19 +57,19 @@ async function run() {
     //    and place the file at `caver-js-examples/kct/deploy_kip7_token_contract_with_keystore_file/resources`.
     // 2. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
     const keystore = fs.readFileSync(`${__dirname}/resources/keystore.json`, 'utf8')
-    const password = "Password!@#4"; // Put your password here.
+    const password = '' // Put your password here.
     const deployerKeyring = caver.wallet.keyring.decrypt(keystore, password)
     caver.wallet.add(deployerKeyring)
 
     const initialSupply = new BigNumber('1000000000000000000')
-    const params = {name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply}
+    const params = { name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply }
     const kip7 = await caver.kct.kip7.deploy(params, deployerKeyring.address)
     console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`);
 
     const name = await kip7.name()
     console.log(`The name of the KIP-7 token contract: ${name}`)
 
-    const opts = {from: deployerKeyring.address}
+    const opts = { from: deployerKeyring.address }
     const value = 1
     const receipt = await kip7.transfer(recipientAddress, value, opts)
     console.log(receipt)
