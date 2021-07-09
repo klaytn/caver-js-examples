@@ -58,8 +58,8 @@ async function run() {
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
     // Add keyrings to in-memory wallet
-    const senderKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
-    caver.wallet.add(senderKeyring)
+    const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
+    caver.wallet.add(deployerKeyring)
     const feePayerKeyring = caver.wallet.keyring.create(feePayerAddress, feePayerPrivateKey)
     caver.wallet.add(feePayerKeyring)
 
@@ -99,7 +99,7 @@ async function run() {
 
     // Send a FeeDelegatedSmartContractDeploy transaction to Klaytn directly.
     contract = await contract.deploy({
-        from: senderKeyring.address,
+        from: deployerKeyring.address,
         feeDelegation: true,
         feePayer: feePayerKeyring.address,
         gas: 1000000,
@@ -108,7 +108,7 @@ async function run() {
 
     // // The sender and fee payer each sign the transaction to deploy a smart contract.
     // const deployTx = await contract.sign({
-    //     from: senderKeyring.address,
+    //     from: deployerKeyring.address,
     //     feeDelegation: true,
     //     gas: 1000000,
     // }, 'constructor', byteCode, keyString, 'valueString')
@@ -126,7 +126,7 @@ async function run() {
 
     // Send a FeeDelegatedSmartContractExecutionWithRatio transaction to Klaytn directly.
     const setResult = await contract.send({
-        from: senderKeyring.address,
+        from: deployerKeyring.address,
         feeDelegation: true,
         feePayer: feePayerKeyring.address,
         feeRatio: 50, // Without feeRatio, `send` will use FeeDelegatedSmartContractExecution
@@ -135,7 +135,7 @@ async function run() {
 
     // // The sender and fee payer each sign the transaction to execute a smart contract.
     // const executionTx = await contract.sign({
-    //     from: senderKeyring.address,
+    //     from: deployerKeyring.address,
     //     feeDelegation: true,
     //     feeRatio: 50, // Withour feeRatio, `send` will use FeeDelegatedSmartContractExecution
     //     gas: 1000000,
