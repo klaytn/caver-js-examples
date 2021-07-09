@@ -10,11 +10,12 @@ let secretAccessKey = '' // e.g. 'aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG'
 let chainId = '' // e.g. '1001' or '8217'
 let senderAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 let senderPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
+let recipientAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 
 /**
- * Boilerplate code about "How to ..."
- * Related article - Korean:
- * Related article - English:
+ * Boilerplate code about "Using IPFS with Caver."
+ * Related article - Korean: https://medium.com/klaytn/caver%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-ipfs-%EC%82%AC%EC%9A%A9%EB%B2%95-4889a3b29c0b
+ * Related article - English: https://medium.com/klaytn/using-ipfs-with-caver-964e1f721bfe
  */
 async function main() {
     try {
@@ -39,6 +40,7 @@ function loadEnv() {
     chainId = chainId === '' ? envs.parsed.CHAIN_ID : chainId
     senderAddress = senderAddress === '' ? envs.parsed.SENDER_ADDRESS : senderAddress
     senderPrivateKey = senderPrivateKey === '' ? envs.parsed.SENDER_PRIVATE_KEY : senderPrivateKey
+    recipientAddress = recipientAddress === '' ? envs.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
 async function run() {
@@ -53,5 +55,44 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    // Write your own boilerplate.js...
+    // Set connection with IPFS Node
+    caver.ipfs.setIPFSNode('ipfs.infura.io', 5001, true)
+    // `ipfs.txt` is located at `caver-js-examples/ipfs/using_ipfs_with_caver/resources`.
+    const testFile = `${__dirname}/resources/ipfs.txt`
+
+    // Add a file to IPFS with file path
+    let cid = await caver.ipfs.add(testFile)
+    console.log(`cid: ${cid}`)
+
+    // // Add a file to IPFS with file contents
+    // const contents = Buffer.from('test data')
+    // const cid = await caver.ipfs.add(contents)
+
+    // Download a file from IPFS
+    const buffer = await caver.ipfs.get(cid)
+    console.log(`Contents downloaded from IPFS: ${buffer.toString('utf8')}`)
+
+    // Convert from CID to multihash(hex formatted)
+    const multihash = await caver.ipfs.toHex(cid)
+    console.log(`multihash: ${multihash}`)
+
+    // Add keyring to in-memory wallet
+    const senderKeyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
+    caver.wallet.add(senderKeyring)
+
+    // Create ValueTransferMemo transaction
+    const tx = caver.transaction.valueTransferMemo.create({
+        from: senderKeyring.address,
+        to: recipientAddress,
+        value: 1,
+        input: multihash,
+        gas: 30000,
+    })
+
+    // Sign to the transaction
+    await caver.wallet.sign(senderKeyring.address, tx)
+
+    // Send a signed transaction to Klaytn
+    const receipt = await caver.rpc.klay.sendRawTransaction(tx)
+    console.log(receipt)
 }

@@ -1,0 +1,1 @@
+Text which will be stored on IPFS 

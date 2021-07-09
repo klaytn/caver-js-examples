@@ -1,17 +1,17 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
-const ROOT_DIR = path.join(__dirname, '../..'); // Path can be changed based on its actual location.
+const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
 // You can directly input values for the variables below, or you can enter values in the caver-js-examples/.env file.
 let nodeApiUrl = '' // e.g. 'https://node-api.klaytnapi.com/v1/klaytn'
 let accessKeyId = '' // e.g. 'KASK1LVNO498YT6KJQFUPY8S'
 let secretAccessKey = '' // e.g. 'aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG'
 let chainId = '' // e.g. '1001' or '8217'
-let deployerAddress = ''; // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
-let deployerPrivateKey = ''; // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
-let feePayerAddress = ''; // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
-let feePayerPrivateKey = ''; // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
+let deployerAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
+let deployerPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
+let feePayerAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
+let feePayerPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
 
 /**
  * Boilerplate code about "How to use Fee Delegation with Contract."
