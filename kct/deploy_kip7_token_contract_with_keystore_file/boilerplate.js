@@ -53,9 +53,10 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    // 1. Create your own keystore file at "https://baobab.wallet.klaytn.com/create"
-    //    and place the file at `caver-js-examples/kct/deploy_kip7_token_contract_with_keystore_file/resources`.
-    // 2. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
+    // 1. Create your own keystore file at "https://baobab.wallet.klaytn.com/create".
+    // 2. Rename that keystore file name with `keystore.json` or change the filename in line 60.
+    // 3. Place that keystore file at `caver-js-examples/kct/deploy_kip7_token_contract_with_keystore_file/resources`.
+    // 4. Get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
     const keystore = fs.readFileSync(`${__dirname}/resources/keystore.json`, 'utf8')
     const password = '' // Put your password here.
     const deployerKeyring = caver.wallet.keyring.decrypt(keystore, password)
