@@ -14,9 +14,9 @@ let senderPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c
 let recipientAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 
 /**
- * Boilerplate code about "How to Update Klaytn Account Keys with Caver #1 — AccountKeyPublic"
- * Related article - Korean: https://medium.com/klaytn/caver-caver%EB%A1%9C-klaytn-%EA%B3%84%EC%A0%95%EC%9D%98-%ED%82%A4%EB%A5%BC-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95-1-accountkeypublic-7f8a7197e2d4
- * Related article - English: https://medium.com/klaytn/caver-how-to-update-klaytn-account-keys-with-caver-1-accountkeypublic-30336b8f0b50
+ * Example code about "How to Update Klaytn Account Keys with Caver #3 — AccountKeyRoleBased"
+ * Related article - Korean: https://medium.com/klaytn/caver-caver%EB%A1%9C-klaytn-%EA%B3%84%EC%A0%95%EC%9D%98-%ED%82%A4%EB%A5%BC-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95-3-accountkeyrolebased-88c20b405f18
+ * Related article - English: https://medium.com/klaytn/caver-how-to-update-klaytn-account-keys-with-caver-3-accountkeyrolebased-eb06433ff8da
  */
 async function main() {
     try {
@@ -45,7 +45,7 @@ function loadEnv() {
 }
 
 async function run() {
-    console.log(`=====> Update AccountKey to AccountKeyPublic`)
+    console.log(`=====> Update AccountKey to AccountKeyRoleBased`)
     const option = {
         headers: [
             {
@@ -61,21 +61,21 @@ async function run() {
     const senderKeyring = caver.wallet.keyring.create(senderAddress, senderPrivateKey)
     caver.wallet.add(senderKeyring)
 
-    // Create new private key
-    const newKey = caver.wallet.keyring.generateSingleKey()
-    console.log(`new private key: ${newKey}`)
+    // Create new private keys
+    const newRoleBasedKeys = caver.wallet.keyring.generateRoleBasedKeys([2, 1, 3])
+    console.log(`new private keys by role: ${JSON.stringify(newRoleBasedKeys)}`)
 
-    // Create new Keyring instance with new private key
-    const newKeyring = caver.wallet.keyring.create(senderKeyring.address, newKey)
-    // Create an Account instance that includes the address and the public key
-    const account = newKeyring.toAccount()
+    // Create new Keyring instance with new private keys by role
+    const newKeyring = caver.wallet.keyring.create(senderKeyring.address, newRoleBasedKeys)
+    // Create an Account instance that includes the address and the role based key
+    const account = newKeyring.toAccount([{ threshold: 2, weights: [1, 1] }, {}, { threshold: 3, weights: [2, 1, 1] }])
     console.log(account)
 
     // Create account update transaction object
     const accountUpdate = caver.transaction.accountUpdate.create({
         from: senderKeyring.address,
         account: account,
-        gas: 50000,
+        gas: 150000,
     })
 
     // Sign the transaction
@@ -87,7 +87,7 @@ async function run() {
 
     // Get accountKey from network
     const accountKey = await caver.rpc.klay.getAccountKey(senderKeyring.address)
-    console.log(`Result of account key update to AccountKeyPublic`)
+    console.log(`Result of account key update to AccountKeyRoleBased`)
     console.log(`Account address: ${senderKeyring.address}`)
     console.log(`accountKey =>`)
     console.log(accountKey)
@@ -99,10 +99,11 @@ async function run() {
         from: senderKeyring.address,
         to: recipientAddress,
         value: 1,
-        gas: 25000,
+        gas: 150000,
     })
 
     // Sign the transaction with updated keyring
+    // This sign function will sign the transaction with all private keys in RoleTrasnsactionKey in the keyring
     await caver.wallet.sign(senderKeyring.address, vt)
     // Send transaction
     const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)

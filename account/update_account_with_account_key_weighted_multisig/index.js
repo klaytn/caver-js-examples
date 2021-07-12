@@ -14,9 +14,9 @@ let senderPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c
 let recipientAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 
 /**
- * Boilerplate code about "How to Update Klaytn Account Keys with Caver #3 — AccountKeyRoleBased"
- * Related article - Korean: https://medium.com/klaytn/caver-caver%EB%A1%9C-klaytn-%EA%B3%84%EC%A0%95%EC%9D%98-%ED%82%A4%EB%A5%BC-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95-3-accountkeyrolebased-88c20b405f18
- * Related article - English: https://medium.com/klaytn/caver-how-to-update-klaytn-account-keys-with-caver-3-accountkeyrolebased-eb06433ff8da
+ * Example code about "How to Update Klaytn Account Keys with Caver #2 — AccountKeyWeightedMultiSig"
+ * Related article - Korean: https://medium.com/klaytn/caver-caver%EB%A1%9C-klaytn-%EA%B3%84%EC%A0%95%EC%9D%98-%ED%82%A4%EB%A5%BC-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95-2-accountkeyweightedmultisig-c317a785299
+ * Related article - English: https://medium.com/klaytn/caver-how-to-update-klaytn-account-keys-with-caver-2-accountkeyweightedmultisig-ed897b4e5b5b
  */
 async function main() {
     try {
@@ -45,7 +45,7 @@ function loadEnv() {
 }
 
 async function run() {
-    console.log(`=====> Update AccountKey to AccountKeyRoleBased`)
+    console.log(`=====> Update AccountKey to AccountKeyWeightedMultiSig`)
     const option = {
         headers: [
             {
@@ -62,20 +62,20 @@ async function run() {
     caver.wallet.add(senderKeyring)
 
     // Create new private keys
-    const newRoleBasedKeys = caver.wallet.keyring.generateRoleBasedKeys([2, 1, 3])
-    console.log(`new private keys by role: ${JSON.stringify(newRoleBasedKeys)}`)
+    const newKeys = caver.wallet.keyring.generateMultipleKeys(3)
+    console.log(`new private keys: ${JSON.stringify(newKeys)}`)
 
-    // Create new Keyring instance with new private keys by role
-    const newKeyring = caver.wallet.keyring.create(senderKeyring.address, newRoleBasedKeys)
-    // Create an Account instance that includes the address and the role based key
-    const account = newKeyring.toAccount([{ threshold: 2, weights: [1, 1] }, {}, { threshold: 3, weights: [2, 1, 1] }])
+    // Create new Keyring instance with new private keys
+    const newKeyring = caver.wallet.keyring.create(senderKeyring.address, newKeys)
+    // Create an Account instance that includes the address and the weighted multisig key
+    const account = newKeyring.toAccount({ threshold: 3, weights: [2, 1, 1] })
     console.log(account)
 
     // Create account update transaction object
     const accountUpdate = caver.transaction.accountUpdate.create({
         from: senderKeyring.address,
         account: account,
-        gas: 150000,
+        gas: 100000,
     })
 
     // Sign the transaction
@@ -87,7 +87,7 @@ async function run() {
 
     // Get accountKey from network
     const accountKey = await caver.rpc.klay.getAccountKey(senderKeyring.address)
-    console.log(`Result of account key update to AccountKeyRoleBased`)
+    console.log(`Result of account key update to AccountKeyWeightedMultiSig`)
     console.log(`Account address: ${senderKeyring.address}`)
     console.log(`accountKey =>`)
     console.log(accountKey)
@@ -99,11 +99,11 @@ async function run() {
         from: senderKeyring.address,
         to: recipientAddress,
         value: 1,
-        gas: 150000,
+        gas: 100000,
     })
 
     // Sign the transaction with updated keyring
-    // This sign function will sign the transaction with all private keys in RoleTrasnsactionKey in the keyring
+    // This sign function will sign the transaction with all private keys in the keyring
     await caver.wallet.sign(senderKeyring.address, vt)
     // Send transaction
     const vtReceipt = await caver.rpc.klay.sendRawTransaction(vt)
