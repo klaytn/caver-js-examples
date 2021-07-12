@@ -15,8 +15,8 @@ let recipientAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 
 /**
  * Boilerplate code about "How to Update Klaytn Account Keys with Caver #3 — AccountKeyRoleBased"
- * Related article - Korean: https://medium.com/klaytn/klaytn-%EC%82%AC%EC%9A%A9%EC%84%B1-%EA%B0%9C%EC%84%A0-series-4-%ED%94%8C%EB%9E%AB%ED%8F%BC%EC%97%90%EC%84%9C%EC%9D%98-role-based-key-%EC%A7%80%EC%9B%90-216a34b959c3
- * Related article - English: https://medium.com/klaytn/klaytn-usability-improvement-series-4-supporting-role-based-keys-on-the-platform-level-e2c912672b7b
+ * Related article - Korean: https://medium.com/klaytn/caver-caver%EB%A1%9C-klaytn-%EA%B3%84%EC%A0%95%EC%9D%98-%ED%82%A4%EB%A5%BC-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95-3-accountkeyrolebased-88c20b405f18
+ * Related article - English: https://medium.com/klaytn/caver-how-to-update-klaytn-account-keys-with-caver-3-accountkeyrolebased-eb06433ff8da
  */
 async function main() {
     try {
