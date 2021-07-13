@@ -57,6 +57,9 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
+    // Deployer account must have KLAY enough to deploy contract.
+    // If you are testing on the Baobab testnet,
+    // you can get 5 KLAY at "https://baobab.wallet.klaytn.com/faucet".
     const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
     caver.wallet.add(deployerKeyring)
 
