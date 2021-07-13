@@ -127,11 +127,8 @@ async function run() {
     // console.log(`Sender signed transaction: `)
     // console.log(deployTx)
 
-    // const rlpEncoded = deployTx.getRLPEncoding()
-    // const signedDeployTx = caver.transaction.decode(rlpEncoded)
-
-    // await caver.wallet.signAsFeePayer(feePayerKeyring.address, signedDeployTx) // Signs the transaction as a fee payer
-    // const receipt = await caver.rpc.klay.sendRawTransaction(signedDeployTx)
+    // await caver.wallet.signAsFeePayer(feePayerKeyring.address, deployTx) // Signs the transaction as a fee payer
+    // const receipt = await caver.rpc.klay.sendRawTransaction(deployTx)
     // console.log(`The address of deployed smart contract: ${receipt.contractAddress}`)
     // contract = caver.contract.create(abi, receipt.contractAddress)
 
