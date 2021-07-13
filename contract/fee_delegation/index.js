@@ -15,7 +15,7 @@ let feePayerAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 let feePayerPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
 
 /**
- * Boilerplate code about "How to use Fee Delegation with Contract."
+ * Example code about "How to use Fee Delegation with Contract."
  * Related article - Korean: https://medium.com/klaytn/caver-contract%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EC%88%98%EC%88%98%EB%A3%8C%EB%A5%BC-%EB%8C%80%EB%82%A9%ED%95%B4%EB%B3%B4%EC%9E%90-4c046900c4ed
  * Related article - English: https://medium.com/klaytn/caver-how-to-use-fee-delegation-with-contract-c599388c7cc0
  */

@@ -1,6 +1,7 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
+const BigNumber = require('bignumber.js')
 
 const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
@@ -11,11 +12,12 @@ let secretAccessKey = '' // e.g. 'aP/reVYHXqjw3EtQrMuJP4A3/hOb69TjnBT3ePKG'
 let chainId = '' // e.g. '1001' or '8217'
 let deployerAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 let deployerPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
+let recipientAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 
 /**
- * Boilerplate code about "How to execute Smart Contract."
- * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
- * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
+ * Example code about "How to deploy my own KIP7 token."
+ * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/api-references/caver.kct/kip7
+ * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/api-references/caver.kct/kip7
  */
 async function main() {
     try {
@@ -40,6 +42,7 @@ function loadEnv() {
     chainId = chainId === '' ? envs.parsed.CHAIN_ID : chainId
     deployerAddress = deployerAddress === '' ? envs.parsed.DEPLOYER_ADDRESS : deployerAddress
     deployerPrivateKey = deployerPrivateKey === '' ? envs.parsed.DEPLOYER_PRIVATE_KEY : deployerPrivateKey
+    recipientAddress = recipientAddress === '' ? envs.parsed.RECIPIENT_ADDRESS : recipientAddress
 }
 
 async function run() {
@@ -54,57 +57,19 @@ async function run() {
     }
     const caver = new Caver(new Caver.providers.HttpProvider(nodeApiUrl, option))
 
-    // abi is extracted by compiling caver-js-examples/resources/KVstore.sol using solc(solidity compiler)
-    const abi = [
-        {
-            constant: true,
-            inputs: [{ name: 'key', type: 'string' }],
-            name: 'get',
-            outputs: [{ name: '', type: 'string' }],
-            payable: false,
-            stateMutability: 'view',
-            type: 'function',
-        },
-        {
-            constant: false,
-            inputs: [
-                { name: 'key', type: 'string' },
-                { name: 'value', type: 'string' },
-            ],
-            name: 'set',
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-        },
-        {
-            inputs: [
-                { name: 'key', type: 'string' },
-                { name: 'value', type: 'string' },
-            ],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'constructor',
-        },
-    ]
-    // You can get contract address
-    // by running caver-js-examples/contract/deploy/boilerplate.js :)
-    const contractAddress = '0x{contractAddress}'
     const deployerKeyring = caver.wallet.keyring.create(deployerAddress, deployerPrivateKey)
     caver.wallet.add(deployerKeyring)
 
-    contract = caver.contract.create(abi, contractAddress)
-    const receipt = await contract.send(
-        {
-            from: deployerKeyring.address,
-            gas: 1000000,
-        },
-        'set',
-        'k1',
-        'v1'
-    )
-    console.log(receipt)
+    const initialSupply = new BigNumber('1000000000000000000')
+    const params = { name: 'TestToken', symbol: 'TTK', decimals: 18, initialSupply }
+    const kip7 = await caver.kct.kip7.deploy(params, deployerKeyring.address)
+    console.log(`Deployed address of KIP7 token contract: ${kip7.options.address}`)
 
-    const callResult = await contract.call('get', 'k1')
-    console.log(`Result of calling get function with key: ${callResult}`)
+    const name = await kip7.name()
+    console.log(`The name of the KIP-7 token contract: ${name}`)
+
+    const opts = { from: deployerKeyring.address }
+    const value = 1
+    const receipt = await kip7.transfer(recipientAddress, value, opts)
+    console.log(receipt)
 }

@@ -13,7 +13,7 @@ let deployerAddress = '' // e.g. '0xeb709d59954f4cdc6b6f3bfcd8d531887b7bd199'
 let deployerPrivateKey = '' // e.g. '0x39a6375b608c2572fadb2ed9fd78c5c456ca3aa860c43192ad910c3269727fc1'
 
 /**
- * Boilerplate code about "How to deploy Smart Contract."
+ * Example code about "How to deploy Smart Contract."
  * Related reference - Korean: https://ko.docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
  * Related reference - English: https://docs.klaytn.com/bapp/sdk/caver-js/getting-started#smart-contract
  */
