@@ -69,24 +69,32 @@ async function run() {
         value: 1,
     })
     // Example-1: Sending 0.5 KLAY to recipient
-    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.5 KLAY,
-    // option-1: Set actual peb value directly to ValueTransfer transaction instance.
-    const bigNumberKLAY = new BigNumber('500000000000000000')
-    vt.value = bigNumberKLAY
+    // option-1 (Recommended): Use klayUnit.
+    vt.value = caver.utils.convertToPeb('0.5', caver.utils.klayUnit.KLAY.unit)
     console.log(`Example-1) The value what we set using option-1 is ${vt.value}`)
 
-    // option-2 (Recommended): option-1 is very cumbersome and difficult to read. Let's use more elegant way.
-    const KLAY = caver.utils.convertToPeb(5, caver.utils.klayUnit.KLAY.unit)
-    vt.value = KLAY / 10
+    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.5 KLAY,
+    // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
+    vt.value = new BigNumber('500000000000000000') // 5 * (10^17)
     console.log(`Example-1) The value what we set using option-2 is ${vt.value}`)
 
-    // Example-2: Sending 0.005 KLAY to recipient
-    // option-1: Use bigNumberKLAY we created at option-2 of Example-1.
-    vt.value = bigNumberKLAY / 100
+    // Example-2: Sending 0.05 KLAY to recipient
+    // option-1 (Recommended): Use klayUnit.
+    vt.value = caver.utils.convertToPeb('0.05', caver.utils.klayUnit.KLAY.unit)
     console.log(`Example-2) The value what we set using option-1 is ${vt.value}`)
 
-    // option-2 (Recommended): option-1 has a high probability of being wrong by human error. Let's use more secure methomethodd.
-    const mKLAY = caver.utils.convertToPeb(5, caver.utils.klayUnit.mKLAY.unit)
-    vt.value = mKLAY
+    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.05 KLAY,
+    // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
+    vt.value = new BigNumber('50000000000000000') // 5 * (10^16)
     console.log(`Example-2) The value what we set using option-2 is ${vt.value}`)
+
+    // Example-3: Sending 0.005 KLAY to recipient
+    // option-1 (Recommended): Use klayUnit.
+    vt.value = caver.utils.convertToPeb('5', caver.utils.klayUnit.mKLAY.unit)
+    console.log(`Example-3) The value what we set using option-1 is ${vt.value}`)
+
+    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.005 KLAY,
+    // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
+    vt.value = new BigNumber('5000000000000000') // 5 * (10^15)
+    console.log(`Example-3) The value what we set using option-2 is ${vt.value}`)
 }
