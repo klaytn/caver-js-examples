@@ -28,6 +28,13 @@ KAS를 사용하기 위해서는 [KAS](https://klaytnapi.com)에 가입해야 �
 3. 터미널에서 `node <Common Architecture 레이어>/<시나리오>/index.js`로 예제 소스코드를 실행합니다.
     * 예시 1: `$ node account/update_account_with_account_key_public/index.js`
     * 예시 2: `$ node contract/fee_delegation/index.js`
+    
+### 2.1 Hello World
+시나리오에 관계 없이 바로 caver를 사용해보고 싶다면 `hello_world` 를 실행해보시기 바랍니다. 아래의 커맨드 중 하나를 사용해서 실행할 수 있습니다.
+* `$ cd hello_world && node ./index.js`
+* `$ node hello_world/index.js`
+
+`caver-js-examples/hello_world/index.js` 파일의 `run` 함수에 caver를 사용하는 코드를 자유롭게 작성하고 테스트해보시기 바랍니다.
 
 ## 3. 프로젝트 구조
 caver-js-examples 프로젝트의 구조에 대해 설명합니다.
