@@ -7,7 +7,7 @@
 실습을 원활히 진행하려면 [문서](https://ko.docs.klaytn.com/bapp/sdk/caver-js/getting-started#prerequisites)에 작성된 소프트웨어를 먼저 설치해야 합니다. 해당 문서에는 본 프로젝트를 구성할 때 필요한 소프트웨어를 기술하고 있습니다.
 
 ### 1.2 KAS 회원가입
-Klaytn SDK([caver-js](https://github.com/klaytn/caver-js))는 Klaytn 네트워크를 구성하는 Node를 연결하여 사용할 수 있으며, caver-js-examples 프로젝트에서는 사용자들이 [EN](https://docs.klaytn.com/node/endpoint-node)을 직접 운영하지 않고 예제코드들을 테스트 할 수 있도록 [KAS](https://klaytnapi.com)의 [NODE API](https://refs.klaytnapi.com/en/node/latest)를 사용합니다.
+Klaytn SDK([caver-js](https://github.com/klaytn/caver-js))는 Klaytn 네트워크를 구성하는 노드를 연결해 사용할 수 있는데, caver-js-examples 프로젝트에서는 [KAS](https://klaytnapi.com)의 [Node API](https://refs.klaytnapi.com/en/node/latest)를 사용합니다. 따라서 사용자는 [엔드포인트 노드(EN)](https://docs.klaytn.com/node/endpoint-node)를 직접 운영하지 않아도 예제코드를 테스트 할 수 있습니다.
 
 KAS를 사용하려면 먼저 [KAS](https://klaytnapi.com)에 가입하고, 예제코드 실행에 필요한 `AccessKey ID`와 `Secret AccessKey`를 발급 받습니다.
 발급 받은 `AccessKey ID`와 `Secret AccessKey`의 사용 방법은 [2. 사용법](https://github.com/klaytn/caver-js-examples/blob/master/README.ko.md#2-%EC%82%AC%EC%9A%A9%EB%B2%95)에서 확인할 수 있습니다.
@@ -23,8 +23,8 @@ KAS를 사용하려면 먼저 [KAS](https://klaytnapi.com)에 가입하고, 예�
 ## 2. 사용법
 1. 이 프로젝트를 클론합니다. 터미널에서 `$ git clone https://github.com/klaytn/caver-js-examples.git`을 실행하세요.
 2. 예제를 실행하려면 [KAS Console](https://console.klaytnapi.com/ko/security/credential)에서 발급받은 Credential(AccessKey ID와 Secret AccessKey)과 [Klaytn Wallet 테스트넷](https://baobab.wallet.klaytn.com/create)에서 발급받은 Klaytn 계정을 설정해야 합니다. 실습에 사용하는 계정은 테스트 용도로만 사용할 것을 권장합니다.
-    * 옵션 1(권장): `caver-js-examples/.env` 파일의 내용에 정의합니다. 이 파일에 정의된 내용은 모든 시나리오에 공통 적용됩니다. 각 시나리오의 `index.js` 파일의 `loadEnv` 함수에서 `.env` 파일에 정의된 변수들을 읽어오는 코드가 있으니 참고하시기 바랍니다.
-    * 옵션 2: 원하는 시나리오에 해당하는 `index.js` 파일을 열고 상단에 let 키워드로 선언된 변수들의 값을 채워줍니다.
+    * 옵션 1(권장): **caver-js-examples/.env** 파일에 발급 받은 Credential과 Klaytn 계정을 정의합니다. 이 파일에 정의된 내용은 모든 시나리오에 공통 적용됩니다. 각 시나리오의 **index.js** 파일 `loadEnv` 함수에서 **.env** 파일에 정의한 변수들을 읽어오는 코드가 있으니 참고하시기 바랍니다.
+    * 옵션 2: 원하는 시나리오에 해당하는 **index.js** 파일을 열고 상단에 let 키워드로 선언된 변수의 값을 채웁니다.
 3. 터미널에서 `node <Common Architecture 레이어>/<시나리오>/index.js`로 예제 코드를 실행합니다.
     * 예시 1: `$ node account/update_account_with_account_key_public/index.js`
     * 예시 2: `$ node contract/fee_delegation/index.js`
@@ -34,7 +34,7 @@ KAS를 사용하려면 먼저 [KAS](https://klaytnapi.com)에 가입하고, 예�
 * `$ cd hello_world && node ./index.js`
 * `$ node hello_world/index.js`
 
-`caver-js-examples/hello_world/index.js` 파일의 `run` 함수에 caver를 사용하는 코드를 자유롭게 작성하고 테스트해 보세요.
+**caver-js-examples/hello_world/index.js** 파일의 `run` 함수에 caver를 사용하는 코드를 자유롭게 작성하고 테스트해 보세요.
 
 ## 3. 프로젝트 구조
 caver-js-examples 프로젝트 구조를 설명합니다.
@@ -56,7 +56,7 @@ account
 ├── update_account_with_account_key_role_based
 └── update_account_with_account_key_weighted_multisig
 ```
-* 각 시나리오는 단일 `index.js` 파일을 포함하며, 해당 시나리오에 특정 파일이 필요한 경우 `resources` 디렉토리를 구성합니다.
+* 각 시나리오는 단일 **index.js** 파일을 포함하며, 해당 시나리오에 특정 파일이 필요한 경우 `resources` 디렉토리를 구성합니다.
 * 이는 사용자가 예제를 바로 실행해 볼 수 있도록 구성하기 위함입니다.
 
 ### 3.2 Summary
