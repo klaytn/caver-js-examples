@@ -73,8 +73,9 @@ async function run() {
     vt.value = caver.utils.convertToPeb('0.5', caver.utils.klayUnit.KLAY.unit)
     console.log(`Example-1) The value what we set using option-1 is ${vt.value}`)
 
-    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.5 KLAY,
     // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
+    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.5 KLAY,
+    // you must set 500000000000000000(= 5 * (10^17) as a value of Transaction.
     vt.value = new BigNumber('500000000000000000') // 5 * (10^17)
     console.log(`Example-1) The value what we set using option-2 is ${vt.value}`)
 
@@ -83,8 +84,9 @@ async function run() {
     vt.value = caver.utils.convertToPeb('0.05', caver.utils.klayUnit.KLAY.unit)
     console.log(`Example-2) The value what we set using option-1 is ${vt.value}`)
 
-    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.05 KLAY,
     // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
+    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.05 KLAY,
+    // you must set 50000000000000000(= 5 * (10^16) as a value of Transaction.
     vt.value = new BigNumber('50000000000000000') // 5 * (10^16)
     console.log(`Example-2) The value what we set using option-2 is ${vt.value}`)
 
@@ -93,8 +95,9 @@ async function run() {
     vt.value = caver.utils.convertToPeb('5', caver.utils.klayUnit.mKLAY.unit)
     console.log(`Example-3) The value what we set using option-1 is ${vt.value}`)
 
-    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.005 KLAY,
     // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
+    // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.005 KLAY,
+    // you must set 5000000000000000(= 5 * (10^15) as a value of Transaction.
     vt.value = new BigNumber('5000000000000000') // 5 * (10^15)
     console.log(`Example-3) The value what we set using option-2 is ${vt.value}`)
 }
