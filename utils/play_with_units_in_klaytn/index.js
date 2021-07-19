@@ -1,7 +1,6 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const Caver = require('caver-js')
-const BigNumber = require('bignumber.js')
 
 const ROOT_DIR = path.join(__dirname, '../..') // Path can be changed based on its actual location.
 
@@ -76,7 +75,7 @@ async function run() {
     // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
     // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.5 KLAY,
     // you must set 500000000000000000(= 5 * (10^17) as a value of Transaction.
-    vt.value = new BigNumber('500000000000000000') // 5 * (10^17)
+    vt.value = '500000000000000000' // 5 * (10^17)
     console.log(`Example-1) The value what we set using option-2 is ${vt.value}`)
 
     // Example-2: Sending 0.05 KLAY to recipient
@@ -87,7 +86,7 @@ async function run() {
     // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
     // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.05 KLAY,
     // you must set 50000000000000000(= 5 * (10^16) as a value of Transaction.
-    vt.value = new BigNumber('50000000000000000') // 5 * (10^16)
+    vt.value = '50000000000000000' // 5 * (10^16)
     console.log(`Example-2) The value what we set using option-2 is ${vt.value}`)
 
     // Example-3: Sending 0.005 KLAY to recipient
@@ -98,6 +97,6 @@ async function run() {
     // option-2 (Not recommended): Set actual peb value directly to ValueTransfer transaction object.
     // 1 KLAY is actually 10^18(=1000000000000000000) peb. So if you want send 0.005 KLAY,
     // you must set 5000000000000000(= 5 * (10^15) as a value of Transaction.
-    vt.value = new BigNumber('5000000000000000') // 5 * (10^15)
+    vt.value = '5000000000000000' // 5 * (10^15)
     console.log(`Example-3) The value what we set using option-2 is ${vt.value}`)
 }
