@@ -14,10 +14,10 @@ You can find detailed instructions on how to use the `AccessKey ID` and `Secret 
 
 ### 1.3 Creating Account
 In order to execute the code samples, you need a test account with a sufficient balance of testnet KLAY.
-Because the code samples also involves sending a transaction to Klaytn, you need at least one test account. If you have updated your account key, and your old test account is rendered unusable, you can create a new account. Create a test account following the instructions below and obtain your 5 testnet KLAY. Depending on the scenarios, the code may require multiple test accounts. In that case, repeat the process below to create multiple test accounts.
+Because the code samples also involves sending a transaction to Klaytn, you need at least one test account. If you have updated your account key, and your old test account is rendered unusable, you can create a new account. Create a test account following the instructions below and obtain your 5 testnet KLAY. Depending on the scenarios, you may need multiple test accounts. In that case, just repeat the process to create multiple test accounts.
 1. Create a test account at [Klaytn Wallet Testnet](https://baobab.wallet.klaytn.com/create). 
-    * Take good note of your address and private key of the new account, because they will be used for testing the code samples.
-    * Make sure to separately save the keystore file, because some scenarios require it.
+    * Have the address and private key of the new account written down, because you will need them for testing the code samples.
+    * Make sure to also save the keystore file, because some scenarios require it.
 2. Obtain 5 testnet KLAY on [Baobab Klaytn Wallet Faucet](https://baobab.wallet.klaytn.com/faucet).
 
 ## 2. How to Use
