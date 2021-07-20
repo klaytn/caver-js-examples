@@ -1,6 +1,5 @@
 # caver-js-examples
-**caver-js-examples** provide code samples to help you use the Klaytn SDK([caver-js](https://github.com/klaytn/caver-js)) easier and faster.
-Here you can find and test code samples conceived for different scenarios.
+**caver-js-examples** provide code samples to help you use the Klaytn SDK([caver-js](https://github.com/klaytn/caver-js)) easier and faster. Here you can find and test code samples conceived for different scenarios.
 
 ## 1. Prerequisites
 ### 1.1 Installing Software
