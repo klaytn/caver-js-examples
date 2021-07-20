@@ -22,7 +22,7 @@ Because the code samples also involves sending a transaction to Klaytn, you need
 ## 2. How to Use
 1. Clone this project and then execute `$ git clone https://github.com/klaytn/caver-js-examples.git` in Terminal.
 2. To run the samples, you need to set the Credential (AccessKey ID and Secret AccessKey) which can be obtained on [KAS Console](https://console.klaytnapi.com/ko/security/credential) as well as a Klaytn account obtained on [Klaytn Wallet Testnet](https://baobab.wallet.klaytn.com/create). We recommend using the test account just for testing.
-    * Option 1 (recommended): Define the Credential information and your Klaytn account in the **caver-js-examples/.env** file. The variables defined in this file apply for all scenarios. You can find the code for retrieving the variables defined in the **.env** file in the `loadEnv` function in the **index.js** file of each scenario.
+    * Option 1 (recommended): Define the Credential information and your Klaytn account in the **caver-js-examples/.env** file. The variables defined in this file apply for all scenarios. You can find the code for retrieving the variables defined in the **.env** file in the `loadEnv` function within **index.js** of each scenario.
     * Option 2: Open the **index.js** file for the scenario and fill in the variables declared with the keyword `let`.
 3. In Terminal, execute the code sample using `node <Common Architecture Layer>/<Scenario>/index.js`.
     * Example 1: `$ node account/update_account_with_account_key_public/index.js`
