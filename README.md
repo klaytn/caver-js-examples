@@ -59,7 +59,7 @@ account
 * This allows the users to execute the samples right away.
 
 ### 3.2 Summary
-The caver-js-example project consists of multiple `CA-Layer/시나리오`, and lets you run the code samples with `node CA-Layer/시나리오/index.js` in the project root directory or `node ./index.js` in the scenario's directory.
+The caver-js-example project consists of multiple `CA-Layer/Scenario`, and lets you run the code samples with `node CA-Layer/Scenario/index.js` in the project root directory or `node ./index.js` in the scenario's directory.
 
 ## License
 **caver-js-examples** is released under the [MIT license](./LICENSE).
