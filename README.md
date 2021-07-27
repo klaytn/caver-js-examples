@@ -12,7 +12,7 @@ In order to follow this tutorial, you have to first install the software as list
 You can use the Klaytn SDK([caver-js](https://github.com/klaytn/caver-js)) by connecting to one of the nodes that comprise the Klaytn network. But for the caver-js-examples project, we are using the [Node API](https://refs.klaytnapi.com/en/node/latest) of [KAS](https://klaytnapi.com), which means that you don't have to run an [Endpoint Node (EN)](https://docs.klaytn.com/node/endpoint-node) yourself to test the code samples.
 
 To use KAS, first sign up on [KAS](https://klaytnapi.com), and obtain the `AccessKey ID` and `Secret AccessKey`.
-You can find detailed instructions on how to use the `AccessKey ID` and `Secret AccessKey` in [2. How to Use](https://github.com/klaytn/caver-js-examples/blob/master/README.md#2-%EC%82%AC%EC%9A%A9%EB%B2%95).
+You can find detailed instructions on how to use the `AccessKey ID` and `Secret AccessKey` in [2. How to Use](https://github.com/klaytn/caver-js-examples#2-how-to-use).
 
 ### 1.3 Creating Account
 In order to execute the code samples, you need a test account with a sufficient balance of testnet KLAY.
