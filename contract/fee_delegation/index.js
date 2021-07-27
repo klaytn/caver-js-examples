@@ -118,13 +118,13 @@ async function run() {
     )
     console.log(`The address of deployed smart contract: ${contract.options.address}`)
 
-    // // The sender and fee payer each sign the transaction to deploy a smart contract.
+    // // The deployer and fee payer each sign the transaction to deploy a smart contract.
     // const deployTx = await contract.sign({
     //     from: deployerKeyring.address,
     //     feeDelegation: true,
     //     gas: 1000000,
     // }, 'constructor', byteCode, keyString, 'valueString')
-    // console.log(`Sender signed transaction: `)
+    // console.log(`Deployer signed transaction: `)
     // console.log(deployTx)
 
     // await caver.wallet.signAsFeePayer(feePayerKeyring.address, deployTx) // Signs the transaction as a fee payer
@@ -150,14 +150,14 @@ async function run() {
         'anotherValue'
     )
 
-    // // The sender and fee payer each sign the transaction to execute a smart contract.
+    // // The deployer and fee payer each sign the transaction to execute a smart contract.
     // const executionTx = await contract.sign({
     //     from: deployerKeyring.address,
     //     feeDelegation: true,
     //     feeRatio: 50, // Withour feeRatio, `send` will use FeeDelegatedSmartContractExecution
     //     gas: 1000000,
     // }, 'set', keyString, 'anotherValue')
-    // console.log(`Sender signed transaction: `)
+    // console.log(`Deployer signed transaction: `)
     // console.log(executionTx)
 
     // await caver.wallet.signAsFeePayer(feePayerKeyring.address, executionTx) // Signs the transaction as a fee payer
