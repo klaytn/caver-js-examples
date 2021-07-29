@@ -1,6 +1,6 @@
 ---
 name: "❓ Questions and Others"
-about: Questions regarding caver-js or other issues not related to bug nor feature
+about: Questions regarding caver-js-examples or other issues not related to bug nor feature
   request
 title: ''
 labels: ''
